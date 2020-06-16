@@ -15,4 +15,4 @@
 - [ ] add additional features
 - [ ] optimize it a little
 - [ ] benchmark it
-- [ ] create a packate in pypi
+- [ ] create a packet in pypi
