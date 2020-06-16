@@ -1,12 +1,6 @@
 import os
-import pandas as pd
 
 """
-principal layout
-*.  use database folder
-*. use a main table handler table named "main"
-
-
     SELECT - extracts data from a database
     UPDATE - updates data in a database
     DELETE - deletes data from a database
@@ -18,19 +12,50 @@ principal layout
     DROP TABLE - deletes a table
     CREATE INDEX - creates an index (search key)
     DROP INDEX - deletes an index
-
 """
+
+main_db_location = "database/main.txt"
 def check(option):
-    main_db_location = "database/main.txt"
+    global main_db_location
     if option == 0:
         try:
             main_db_open = open(main_db_location,"r")
-            main_db_open.close()
+#            main_db_open.close()
         except FileNotFoundError:
             check(1)
     elif option==1:
         os.mkdir("database")
-        main_db_create = open(main_db_location,"w")
+        main_db_create = open(main_db_location,"x")
         main_db_create.close()
+        main_db_open = open(main_db_location,"r")
     else:
         print("invalid option")
+
+
+#the creating class
+class create:
+    global main_db_location
+    def table(collection,collum_amount,*names):
+        list_of_db = open(main_db_location,"r")
+        if collection in list_of_db:
+            list_of_db.close()
+            
+        else:
+            print("invalid collection name")
+
+    #this creates the database folder
+    def collection(name):
+        list_of_db = open(main_db_location,"r")
+        if name in list_of_db:
+            print("collection name already exist")
+            list_of_db.close()
+        else:
+            list_of_db.close()
+            db_list_modify = open(main_db_location,"a")
+            db_list_modify.write(name+"\n")
+            os.mkdir("database/"+name)
+            db_list_modify.close()
+            open("database/"+name+"/main.txt","x")
+
+if __name__ != "__main__":
+    check(0)
