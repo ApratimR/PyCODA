@@ -25,11 +25,12 @@ def check(option):
     if option == 0:
         try:
             main_db_open = open(main_db_location,"r")
-        except FileNotFoundError:
             main_db_open.close()
+        except FileNotFoundError:
             check(1)
     elif option==1:
         os.mkdir("database")
-        main_db_open = open(main_db_location,"w")
+        main_db_create = open(main_db_location,"w")
+        main_db_create.close()
     else:
         print("invalid option")
