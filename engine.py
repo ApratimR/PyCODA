@@ -35,21 +35,29 @@ def check(option):
 #the creating class
 class create:
 	global main_db_location
-	def table(collection,collum_amount,names):
+	def table(self,Database,collum_amount,names):
 		list_of_db = open(main_db_location,"r")
-		if collection in list_of_db:
+		if Database+"\n" in list_of_db:
 			list_of_db.close()
+#TODO start with error handling if file already exist
+
+
+			for attribute_name in names:
+				open("database/"+Database+"/"+attribute_name+".txt","x")
+				list_modify = open("database/"+Database+"/"+"main.txt","a")
+				list_modify.write(attribute_name+"\n")
+				list_modify.close()
 
 		else:
-			raise Exception("collection name not found")
+			raise Exception("Database name not found")
 
 	#this creates the database folder
-	def collection(name):
+	def database(self,name):
 		list_of_db = open(main_db_location,"r")
 		if (name+"\n") in list_of_db:
 			#throw errir
 			list_of_db.close()
-			raise Exception("collection name already exist")
+			raise Exception("Database name already exist")
 		else:
 			list_of_db.close()
 			db_list_modify = open(main_db_location,"a")
