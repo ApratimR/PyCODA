@@ -15,6 +15,17 @@ import os
 """
 
 main_db_location = "database/main.txt"
+
+def select_database(mode="select",name=None):
+	if mode =="select":
+		if name==None:
+			raise Exception("Please enter a Database Name")
+		else:
+#TODO make method to check the main db list and set a global varaible
+			pass
+
+
+
 def check(option=0):
 	global main_db_location
 	if option == 0:
@@ -35,7 +46,7 @@ def check(option=0):
 #the creating class
 class create:
 	global main_db_location
-	def table(self,Database,collum_amount,names):
+	def table(Database,collum_amount,names):
 		list_of_db = open(main_db_location,"r")
 		if Database+"\n" in list_of_db:
 			list_of_db.close()
@@ -52,7 +63,7 @@ class create:
 			raise Exception("Database name not found")
 
 	#this creates the database folder
-	def database(self,name):
+	def database(name):
 		list_of_db = open(main_db_location,"r")
 		if (name+"\n") in list_of_db:
 			#throw errir
