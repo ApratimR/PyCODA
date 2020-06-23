@@ -15,7 +15,7 @@ import os
 """
 
 main_db_location = "database/main.txt"
-def check(option):
+def check(option=0):
 	global main_db_location
 	if option == 0:
 		try:
