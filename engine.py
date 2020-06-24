@@ -15,23 +15,29 @@ import os
 """
 
 main_db_location = "database/main.txt"
+currentdb=None
 
-def select_database(mode="select",name=None):
-	if mode =="select":
-		if name==None:
-			raise Exception("Please enter a Database Name")
+def select_database(name=None):
+	global currentdb
+	if name==None:
+		raise Exception("Please enter a Database Name")
+	else:
+		list_of_db = open(main_db_location,"r")
+		if name+"\n" in list_of_db:
+			list_of_db.close()
+			currentdb = name
 		else:
-#TODO make method to check the main db list and set a global varaible
-			pass
+			raise Exception("Database name not found")
 
 
 
+
+#default check for basic setup
 def check(option=0):
 	global main_db_location
 	if option == 0:
 		try:
 			main_db_open = open(main_db_location,"r")
-#            main_db_open.close()
 		except FileNotFoundError:
 			check(1)
 	elif option==1:
@@ -46,18 +52,18 @@ def check(option=0):
 #the creating class
 class create:
 	global main_db_location
-	def table(Database,collum_amount,names):
-		list_of_db = open(main_db_location,"r")
-		if Database+"\n" in list_of_db:
-			list_of_db.close()
-#TODO start with error handling if file already exist
-
-
-			for attribute_name in names:
-				open("database/"+Database+"/"+attribute_name+".txt","x")
-				list_modify = open("database/"+Database+"/"+"main.txt","a")
-				list_modify.write(attribute_name+"\n")
-				list_modify.close()
+	global currentdb
+	def table(names,database=None):
+		#FIXME need some serious work here
+		if database == None:
+			database = currentdb
+		if database == None:
+			raise Exception("No database selected for creating tables operation")
+		for attribute_name in names:
+			open("database/"+currentdb+"/"+attribute_name+".txt","x")
+			list_modify = open("database/"+currentdb+"/"+"main.txt","a")
+			list_modify.write(attribute_name+"\n")
+			list_modify.close()
 
 		else:
 			raise Exception("Database name not found")
@@ -66,7 +72,7 @@ class create:
 	def database(name):
 		list_of_db = open(main_db_location,"r")
 		if (name+"\n") in list_of_db:
-			#throw errir
+			#throw error
 			list_of_db.close()
 			raise Exception("Database name already exist")
 		else:
