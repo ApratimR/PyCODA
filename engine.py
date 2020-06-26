@@ -17,6 +17,12 @@ import os
 main_db_location = "database/main.txt"
 currentdb=None
 
+#the error =======================================================================
+
+
+
+
+#the error =======================================================================
 def select_database(name=None):
 	global currentdb
 	if name==None:
@@ -49,39 +55,44 @@ def check(option=0):
 		print("invalid option")
 
 
-#the creating class
-class create:
-	global main_db_location
+#create the table in the database	
+def create_table(names,database=None):
 	global currentdb
-	def table(names,database=None):
-		#FIXME need some serious work here
-		if database == None:
+	if database == None:
+		if currentdb != None:
 			database = currentdb
-		if database == None:
+		else:
 			raise Exception("No database selected for creating tables operation")
+	
+	list_of_db = open(main_db_location,"r")
+	if (database+"\n") in list_of_db:
+		#throw error
+		list_of_db.close()
 		for attribute_name in names:
 			open("database/"+currentdb+"/"+attribute_name+".txt","x")
 			list_modify = open("database/"+currentdb+"/"+"main.txt","a")
 			list_modify.write(attribute_name+"\n")
 			list_modify.close()
+	else:
+		raise Exception("Database name not found")
+		
 
-		else:
-			raise Exception("Database name not found")
+	
 
-	#this creates the database folder
-	def database(name):
-		list_of_db = open(main_db_location,"r")
-		if (name+"\n") in list_of_db:
-			#throw error
-			list_of_db.close()
-			raise Exception("Database name already exist")
-		else:
-			list_of_db.close()
-			db_list_modify = open(main_db_location,"a")
-			db_list_modify.write(name+"\n")
-			os.mkdir("database/"+name)
-			db_list_modify.close()
-			open("database/"+name+"/main.txt","x")
+#this creates the database folder
+def create_database(name):
+	list_of_db = open(main_db_location,"r")
+	if (name+"\n") in list_of_db:
+		#throw error
+		list_of_db.close()
+		raise Exception("Database name already exist")
+	else:
+		list_of_db.close()
+		db_list_modify = open(main_db_location,"a")
+		db_list_modify.write(name+"\n")
+		os.mkdir("database/"+name)
+		db_list_modify.close()
+		open("database/"+name+"/main.txt","x")
 
 if __name__ != "__main__":
 	check(0)
