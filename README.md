@@ -1,6 +1,6 @@
 # PyCODA (Python COlumnar DAtabase)
 
-<img src="PyCODA_logo.svg">
+<img src="PyCODA_logo.svg" width="70%">
 
 ## what is this ?
 -> Its a under construction database system written in python
