@@ -19,6 +19,22 @@ currentdb=None
 
 #the error =======================================================================
 
+#these are the database errors
+def errDatabaseAlreadyExist(name):
+	raise Exception(f"database of the name '{name}' already exist ")
+
+def errDatabaseNotFound(name):
+	raise Exception(f"database of the name '{name}' not found")
+
+def errDatabaseNotSelected():
+	raise Exception("No database selected for operation or in current DB view")
+
+
+#these are the option errors
+def errInvalidOptionSelected():
+	raise Exception("please select a valid option")
+
+#these are the table errors
 
 
 
@@ -46,13 +62,14 @@ def check(option=0):
 			main_db_open = open(main_db_location,"r")
 		except FileNotFoundError:
 			check(1)
+
 	elif option==1:
 		os.mkdir("database")
 		main_db_create = open(main_db_location,"x")
 		main_db_create.close()
 		main_db_open = open(main_db_location,"r")
 	else:
-		print("invalid option")
+		errInvalidOptionSelected()
 
 
 #create the table in the database	
