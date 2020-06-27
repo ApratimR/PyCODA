@@ -44,7 +44,7 @@ def errInvalidOptionSelected():
 
 	
 
-#this changes the global view of selected db
+# changes the global view of selected db
 def select_database(name=None):
 	global currentdb
 	if name==None:
@@ -82,8 +82,11 @@ def create_table(names,database=None):
 
 
 
-#this creates the database folder
+# creates the database folder
+
 def create_database(name):
+	
+	# FIXME
 	list_of_db = open(main_db_location,"r")
 	if (name+"\n") in list_of_db:
 		list_of_db.close()
@@ -99,7 +102,7 @@ def create_database(name):
 
 
 
-#default check for basic setup
+# default check for basic setup
 def check(option=0):
 	global main_db_location
 	if option == 0:
@@ -118,7 +121,7 @@ def check(option=0):
 
 
 
-#this drops the database
+# drops the database
 def delete_database(database=None):
 	global currentdb
 	if database == None:
@@ -131,10 +134,16 @@ def delete_database(database=None):
 
 
 
-#this checks for a name in the main database
-def available_in_database(Name=currentdb):
-	#FIXME work on a flag mechanism for checking name in current db
-	pass
+# checks for a name in the main database
+def check_databaseName_in_mainDatabase(name=currentdb):
+	global main_db_location
+	list_of_db = open(main_db_location,"r")
+	if (name+"\n") in list_of_db:
+		list_of_db.close()
+		return True
+	else:
+		list_of_db.close()
+		return False
 
 
 #the main import default check============================================================
