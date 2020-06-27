@@ -14,10 +14,13 @@ import os
 	DROP INDEX - deletes an index
 """
 
+#global variables ========================================================================
 main_db_location = "database/main.txt"
 currentdb=None
+#global variables ========================================================================
 
-#the error =======================================================================
+
+#the error ===============================================================================
 
 #these are the database errors
 def errDatabaseAlreadyExist(name):
@@ -37,8 +40,7 @@ def errInvalidOptionSelected():
 #these are the table errors
 
 
-
-#the error =======================================================================
+#the error ===============================================================================
 def select_database(name=None):
 	global currentdb
 	if name==None:
@@ -69,7 +71,7 @@ def check(option=0):
 		main_db_create.close()
 		main_db_open = open(main_db_location,"r")
 	else:
-		errInvalidOptionSelected()
+		check(0)
 
 
 #create the table in the database	
@@ -79,7 +81,7 @@ def create_table(names,database=None):
 		if currentdb != None:
 			database = currentdb
 		else:
-			raise Exception("No database selected for creating tables operation")
+			errDatabaseNotSelected()
 	
 	list_of_db = open(main_db_location,"r")
 	if (database+"\n") in list_of_db:
@@ -91,18 +93,15 @@ def create_table(names,database=None):
 			list_modify.write(attribute_name+"\n")
 			list_modify.close()
 	else:
-		raise Exception("Database name not found")
-		
-
-	
+		errDatabaseNotFound(database)
 
 #this creates the database folder
 def create_database(name):
 	list_of_db = open(main_db_location,"r")
 	if (name+"\n") in list_of_db:
-		#throw error
 		list_of_db.close()
-		raise Exception("Database name already exist")
+		errDatabaseAlreadyExist(name)
+
 	else:
 		list_of_db.close()
 		db_list_modify = open(main_db_location,"a")
@@ -111,5 +110,8 @@ def create_database(name):
 		db_list_modify.close()
 		open("database/"+name+"/main.txt","x")
 
+
+#the main import default check============================================================
 if __name__ != "__main__":
 	check(0)
+#the main import default check============================================================
