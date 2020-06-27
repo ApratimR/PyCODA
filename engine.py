@@ -1,4 +1,5 @@
 import os
+import shutil
 
 """
 	SELECT - extracts data from a database
@@ -68,10 +69,7 @@ def create_table(names,database=None):
 		else:
 			errDatabaseNotSelected()
 	
-	list_of_db = open(main_db_location,"r")
-	if (database+"\n") in list_of_db:
-		#throw error
-		list_of_db.close()
+	if check_databaseName_in_mainDatabase(database)==True:
 		for attribute_name in names:
 			open("database/"+currentdb+"/"+attribute_name+".txt","x")
 			list_modify = open("database/"+currentdb+"/"+"main.txt","a")
@@ -123,8 +121,13 @@ def delete_database(database=None):
 			database = currentdb
 		else:
 			errDatabaseNotSelected()
-	#FIXME after checking weather name of database exist in the main database
-	#remove that whole folder
+	if check_databaseName_in_mainDatabase(database)==True:
+		#this if if database name found then delete operations here
+		shutil.rmtree("database/"+database)
+		#TODO : to make a mechasim of reading the master main.txt and remove the current 
+		#name from it
+	else:
+		errDatabaseNotFound(database)
 
 
 
