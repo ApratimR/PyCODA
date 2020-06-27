@@ -85,15 +85,9 @@ def create_table(names,database=None):
 # creates the database folder
 
 def create_database(name):
-	
-	# FIXME
-	list_of_db = open(main_db_location,"r")
-	if (name+"\n") in list_of_db:
-		list_of_db.close()
+	if check_databaseName_in_mainDatabase(name) == True:
 		errDatabaseAlreadyExist(name)
-
 	else:
-		list_of_db.close()
 		db_list_modify = open(main_db_location,"a")
 		db_list_modify.write(name+"\n")
 		os.mkdir("database/"+name)
