@@ -41,6 +41,10 @@ def errInvalidOptionSelected():
 
 
 #the error ===============================================================================
+
+	
+
+#this changes the global view of selected db
 def select_database(name=None):
 	global currentdb
 	if name==None:
@@ -53,6 +57,45 @@ def select_database(name=None):
 		else:
 			raise Exception("Database name not found")
 
+
+
+#create the table in the database 
+def create_table(names,database=None):
+	global currentdb
+	if database == None:
+		if currentdb != None:
+			database = currentdb
+		else:
+			errDatabaseNotSelected()
+	
+	list_of_db = open(main_db_location,"r")
+	if (database+"\n") in list_of_db:
+		#throw error
+		list_of_db.close()
+		for attribute_name in names:
+			open("database/"+currentdb+"/"+attribute_name+".txt","x")
+			list_modify = open("database/"+currentdb+"/"+"main.txt","a")
+			list_modify.write(attribute_name+"\n")
+			list_modify.close()
+	else:
+		errDatabaseNotFound(database)
+
+
+
+#this creates the database folder
+def create_database(name):
+	list_of_db = open(main_db_location,"r")
+	if (name+"\n") in list_of_db:
+		list_of_db.close()
+		errDatabaseAlreadyExist(name)
+
+	else:
+		list_of_db.close()
+		db_list_modify = open(main_db_location,"a")
+		db_list_modify.write(name+"\n")
+		os.mkdir("database/"+name)
+		db_list_modify.close()
+		open("database/"+name+"/main.txt","x")
 
 
 
@@ -74,41 +117,24 @@ def check(option=0):
 		check(0)
 
 
-#create the table in the database	
-def create_table(names,database=None):
+
+#this drops the database
+def delete_database(database=None):
 	global currentdb
 	if database == None:
 		if currentdb != None:
 			database = currentdb
 		else:
 			errDatabaseNotSelected()
-	
-	list_of_db = open(main_db_location,"r")
-	if (database+"\n") in list_of_db:
-		#throw error
-		list_of_db.close()
-		for attribute_name in names:
-			open("database/"+currentdb+"/"+attribute_name+".txt","x")
-			list_modify = open("database/"+currentdb+"/"+"main.txt","a")
-			list_modify.write(attribute_name+"\n")
-			list_modify.close()
-	else:
-		errDatabaseNotFound(database)
+	#FIXME after checking weather name of database exist in the main database
+	#remove that whole folder
 
-#this creates the database folder
-def create_database(name):
-	list_of_db = open(main_db_location,"r")
-	if (name+"\n") in list_of_db:
-		list_of_db.close()
-		errDatabaseAlreadyExist(name)
 
-	else:
-		list_of_db.close()
-		db_list_modify = open(main_db_location,"a")
-		db_list_modify.write(name+"\n")
-		os.mkdir("database/"+name)
-		db_list_modify.close()
-		open("database/"+name+"/main.txt","x")
+
+#this checks for a name in the main database
+def available_in_database(Name=currentdb):
+	#FIXME work on a flag mechanism for checking name in current db
+	pass
 
 
 #the main import default check============================================================
