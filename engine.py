@@ -1,18 +1,19 @@
 import os
 import shutil
+#import fileinput as filein
 
 """
-	SELECT - extracts data from a database
-	UPDATE - updates data in a database
-	DELETE - deletes data from a database
-	INSERT INTO - inserts new data into a database
-	CREATE DATABASE - creates a new database
-	ALTER DATABASE - modifies a database
-	CREATE TABLE - creates a new table
-	ALTER TABLE - modifies a table
-	DROP TABLE - deletes a table
-	CREATE INDEX - creates an index (search key)
-	DROP INDEX - deletes an index
+	[ ]	SELECT - extracts data from a database
+	[ ]	UPDATE - updates data in a database
+	[ ]	DELETE - deletes data from a database
+	[ ]	INSERT INTO - inserts new data into a database
+	[x]	CREATE DATABASE - creates a new database
+	[ ]	ALTER DATABASE - modifies a database
+	[x]	CREATE TABLE - creates a new table
+	[ ]	ALTER TABLE - modifies a table
+	[ ]	DROP TABLE - deletes a table
+	[ ]	CREATE INDEX - creates an index (search key)
+	[ ]	DROP INDEX - deletes an index
 """
 
 #global variables ========================================================================
@@ -81,7 +82,6 @@ def create_table(names,database=None):
 
 
 # creates the database folder
-
 def create_database(name):
 	if check_databaseName_in_mainDatabase(name) == True:
 		errDatabaseAlreadyExist(name)
@@ -124,6 +124,9 @@ def delete_database(database=None):
 	if check_databaseName_in_mainDatabase(database)==True:
 		#this if if database name found then delete operations here
 		shutil.rmtree("database/"+database)
+		list_of_db = open("database/main.txt","r+")
+		
+		#TODO : make proper writeline function here
 		#TODO : to make a mechasim of reading the master main.txt and remove the current 
 		#name from it
 	else:
@@ -141,6 +144,7 @@ def check_databaseName_in_mainDatabase(name=currentdb):
 	else:
 		list_of_db.close()
 		return False
+
 
 
 #the main import default check============================================================
