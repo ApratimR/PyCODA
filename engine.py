@@ -42,6 +42,10 @@ def errInvalidOptionSelected():
 #these are the table errors
 
 
+#file tampered with error
+def errTamperWithFile(name):
+	raise Exception(f"the file {name} is altered without proper operation")
+
 #the error ===============================================================================
 
 	
@@ -116,6 +120,7 @@ def check(option=0):
 # drops the database
 def delete_database(database=None):
 	global currentdb
+	global main_db_location
 	if database == None:
 		if currentdb != None:
 			database = currentdb
@@ -123,8 +128,16 @@ def delete_database(database=None):
 			errDatabaseNotSelected()
 	if check_databaseName_in_mainDatabase(database)==True:
 		#this if if database name found then delete operations here
+		with open(main_db_location,"r") as readhead:
+			main_db_shadow_image = readhead.readlines()
+			try:
+				main_db_shadow_image[main_db_shadow_image.index(database+"\n")]=""
+			except:
+				errTamperWithFile()
+		with open(main_db_location,"w") as writehead:
+			writehead.write("".join((main_db_shadow_image)))
 		shutil.rmtree("database/"+database)
-		list_of_db = open("database/main.txt","r+")
+
 		
 		#TODO : make proper writeline function here
 		#TODO : to make a mechasim of reading the master main.txt and remove the current 
