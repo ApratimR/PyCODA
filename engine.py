@@ -5,7 +5,7 @@ import shutil
 """
 	[ ]	SELECT - extracts data from a database
 	[ ]	UPDATE - updates data in a database
-	[ ]	DELETE - deletes data from a database
+	[x] DROP DATABASE - deletes a database
 	[ ]	INSERT INTO - inserts new data into a database
 	[x]	CREATE DATABASE - creates a new database
 	[ ]	ALTER DATABASE - modifies a database
@@ -46,6 +46,9 @@ def errInvalidOptionSelected():
 def errTamperWithFile(name):
 	raise Exception(f"the file {name} is altered without proper operation")
 
+def errUnknown():
+	raise Exception("Unknown Error Occoured")
+
 #the error ===============================================================================
 
 	
@@ -75,11 +78,14 @@ def create_table(names,database=None):
 			errDatabaseNotSelected()
 	
 	if check_databaseName_in_mainDatabase(database)==True:
-		for attribute_name in names:
-			open("database/"+currentdb+"/"+attribute_name+".txt","x")
-			list_modify = open("database/"+currentdb+"/"+"main.txt","a")
-			list_modify.write(attribute_name+"\n")
-			list_modify.close()
+		try:
+			for attribute_name in names:
+				open("database/"+currentdb+"/"+attribute_name+".txt","x")
+				list_modify = open("database/"+currentdb+"/"+"main.txt","a")
+				list_modify.write(attribute_name+"\n")
+				list_modify.close()
+		except:
+			errUnknown()
 	else:
 		errDatabaseNotFound(database)
 
@@ -137,13 +143,12 @@ def delete_database(database=None):
 		with open(main_db_location,"w") as writehead:
 			writehead.write("".join((main_db_shadow_image)))
 		shutil.rmtree("database/"+database)
-
-		
-		#TODO : make proper writeline function here
-		#TODO : to make a mechasim of reading the master main.txt and remove the current 
-		#name from it
 	else:
 		errDatabaseNotFound(database)
+
+
+
+#drop the table
 
 
 
