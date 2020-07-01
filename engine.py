@@ -69,7 +69,7 @@ def select_database(name=None):
 
 
 #create the table in the database 
-def create_table(names,database=None):
+def create_table(col_name,tablename,database=None):
 	global currentdb
 	if database == None:
 		if currentdb != None:
@@ -79,8 +79,10 @@ def create_table(names,database=None):
 	
 	if check_databaseName_in_mainDatabase(database)==True:
 		try:
-			for attribute_name in names:
-				open("database/"+currentdb+"/"+attribute_name+".txt","x")
+			os.mkdir("database/"+database+"/"+tablename+"/")
+			for attribute_name in col_name:
+				open("database/"+database+"/"+tablename+"/"+attribute_name+".txt","x")
+				#TODO need to woek on directory handling here
 				list_modify = open("database/"+currentdb+"/"+"main.txt","a")
 				list_modify.write(attribute_name+"\n")
 				list_modify.close()
