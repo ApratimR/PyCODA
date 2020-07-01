@@ -79,11 +79,14 @@ def create_table(col_name,tablename,database=None):
 	
 	if check_databaseName_in_mainDatabase(database)==True:
 		try:
-			os.mkdir("database/"+database+"/"+tablename+"/")
+			try:
+				os.mkdir("database/"+database+"/"+tablename)
+				#TODO make a folder for each table and check if it already exist
+			except:
+				pass
 			for attribute_name in col_name:
 				open("database/"+database+"/"+tablename+"/"+attribute_name+".txt","x")
-				#TODO need to woek on directory handling here
-				list_modify = open("database/"+currentdb+"/"+"main.txt","a")
+				list_modify = open("database/"+database+"/"+tablename+"/"+"main.txt","a")
 				list_modify.write(attribute_name+"\n")
 				list_modify.close()
 		except:
