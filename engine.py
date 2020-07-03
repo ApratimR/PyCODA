@@ -98,7 +98,6 @@ def create_table(col_name,tablename,database=None):
 
 
 
-
 #delete column from table in datbase
 def delete_column_table():
 	#TODO start work here
@@ -163,7 +162,20 @@ def delete_database(database=None):
 
 
 #drop the table
-
+def delete_table(tablename,database=None):
+	global currentdb
+	if database == None:
+		if currentdb != None:
+			database = currentdb
+		else:
+			errDatabaseNotSelected()
+	if check_databaseName_in_mainDatabase(database)==True:
+		#TODO make a table checker for the selected db
+		#shutil.rmtree()
+		pass
+	else:
+		errDatabaseNotFound(database)
+	
 
 
 # checks for a name in the main database
@@ -177,6 +189,16 @@ def check_databaseName_in_mainDatabase(name=currentdb):
 		list_of_db.close()
 		return False
 
+
+
+#table checker for a database
+def check_tableName_in_selectedDatabase(tablename,database):
+	if check_databaseName_in_mainDatabase(database)==True:
+		
+		pass
+	else:
+		errDatabaseNotFound(database)
+	
 
 
 #the main import default check============================================================
