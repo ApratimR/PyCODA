@@ -40,12 +40,14 @@ def errInvalidOptionSelected():
 	raise Exception("please select a valid option")
 
 #these are the table errors
-
+def errReservedNameUsed():
+	raise Exception("System reserved names not allowed")
 
 #file tampered with error
 def errTamperWithFile(name):
 	raise Exception(f"the file {name} is altered without proper operation")
 
+#unknow error
 def errUnknown():
 	raise Exception("Unknown Error Occoured")
 
@@ -70,6 +72,9 @@ def select_database(name=None):
 
 #create the table in the database 
 def create_table(col_name,tablename,database=None):
+	if "main" in col_name:
+		errReservedNameUsed()
+
 	global currentdb
 	if database == None:
 		if currentdb != None:
@@ -79,14 +84,11 @@ def create_table(col_name,tablename,database=None):
 	
 	if check_databaseName_in_mainDatabase(database)==True:
 		try:
-			try:
-				os.mkdir("database/"+database+"/"+tablename)
-				#TODO make a folder for each table and check if it already exist
-			except:
-				pass
+			os.mkdir("database/"+database+"/"+tablename)
+			open("database/"+database+"/"+tablename+"/main.txt","x")
 			for attribute_name in col_name:
 				open("database/"+database+"/"+tablename+"/"+attribute_name+".txt","x")
-				list_modify = open("database/"+database+"/"+tablename+"/"+"main.txt","a")
+				list_modify = open("database/"+database+"/"+tablename+"/main.txt","a")
 				list_modify.write(attribute_name+"\n")
 				list_modify.close()
 		except:
