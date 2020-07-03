@@ -3,7 +3,7 @@ import shutil
 #import fileinput as filein
 
 """
-	[ ]	SELECT - extracts data from a database
+	[x]	SELECT - extracts data from a database
 	[ ]	UPDATE - updates data in a database
 	[x] DROP DATABASE - deletes a database
 	[ ]	INSERT INTO - inserts new data into a database
@@ -96,6 +96,13 @@ def create_table(col_name,tablename,database=None):
 	else:
 		errDatabaseNotFound(database)
 
+
+
+
+#delete column from table in datbase
+def delete_column_table():
+	#TODO start work here
+	pass
 
 
 # creates the database folder
