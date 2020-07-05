@@ -72,6 +72,8 @@ def select_database(name=None):
 
 #create the table in the database 
 def create_table(col_name,tablename,database=None):
+	#FIXME This needs serious working too
+
 	if "main" in col_name:
 		errReservedNameUsed()
 
@@ -191,17 +193,26 @@ def check_databaseName_in_mainDatabase(name=currentdb):
 
 
 
-#table checker for a database
+#table checker for a given database name
 def check_tableName_in_selectedDatabase(tablename,database):
 	if check_databaseName_in_mainDatabase(database)==True:
-		
-		pass
+		try:
+			list_table = open(f"database/{database}/main.txt","r")
+			if tablename+"\n" in list_table.readlines():
+				print("present")
+				#FIXME need serious work here
+			else :
+				print("nope")
+		except:
+			errUnknown()
 	else:
 		errDatabaseNotFound(database)
-	
+
 
 
 #the main import default check============================================================
 if __name__ != "__main__":
+	check(0)
+else:
 	check(0)
 #the main import default check============================================================
